@@ -25,7 +25,7 @@ function unpick(object, keys) {
 
 app.use(express.json());
 
-app.all('/api/:rest*', async (req, res) => {
+app.all('/:rest*', async (req, res) => {
   const url = req.params.rest + (req.params[0] || '');
   if(!isValidUrl(url)) return res.status(500).send('Invalid url');
 
@@ -61,6 +61,10 @@ app.all('/api/:rest*', async (req, res) => {
     console.log('ERROR OCCURED:', error.message);
     res.status(500).send(error.message);
   }
+});
+
+app.get('/', (_, res) => {
+  res.status(200).send('Server running!');
 });
 
 app.listen(PORT, () => {
